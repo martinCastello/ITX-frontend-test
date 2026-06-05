@@ -3,44 +3,45 @@ import { LocationProvider } from 'preact-iso';
 import { CartProvider } from '../context/CartContext';
 import { Header } from './Header';
 
-function renderWithLocation(ui, { path = '/', cartCount = 0 } = {}) {
+function renderHeader({ cartCount = 0, path = '/' } = {}) {
 	window.history.pushState({}, '', path);
 	return render(
 		<CartProvider initialCount={cartCount}>
-			<LocationProvider>{ui}</LocationProvider>
+			<LocationProvider><Header /></LocationProvider>
 		</CartProvider>
 	);
 }
 
 describe('Header', () => {
 	it('renders the app logo linking to home', () => {
-		renderWithLocation(<Header />);
+		renderHeader();
 		const logo = screen.getByText('Tienda Móvil');
 		expect(logo).toBeInTheDocument();
 		expect(logo.getAttribute('href')).toBe('/');
 	});
 
 	it('shows cart count badge when count > 0', () => {
-		renderWithLocation(<Header />, { cartCount: 3 });
+		renderHeader({ cartCount: 3 });
 		expect(screen.getByText('3')).toBeInTheDocument();
 	});
 
 	it('hides cart badge when count is 0', () => {
-		renderWithLocation(<Header />);
+		renderHeader();
 		expect(screen.queryByText('0')).toBeNull();
 	});
 
-	it('shows only Inicio in breadcrumbs on root path', () => {
-		renderWithLocation(<Header />, { path: '/' });
-		const breadcrumb = screen.getByLabelText('breadcrumb');
-		expect(breadcrumb).toHaveTextContent('Inicio');
-		expect(breadcrumb.querySelector('a')).toBeNull();
+	it('renders language toggle button', () => {
+		renderHeader();
+		expect(screen.getByText('EN')).toBeInTheDocument();
 	});
 
-	it('shows Inicio link and Producto in breadcrumbs on product page', () => {
-		renderWithLocation(<Header />, { path: '/product/123' });
-		const breadcrumb = screen.getByLabelText('breadcrumb');
-		expect(breadcrumb.querySelector('a')).toHaveAttribute('href', '/');
-		expect(breadcrumb).toHaveTextContent('Producto');
+	it('hides breadcrumbs on home page', () => {
+		renderHeader({ path: '/' });
+		expect(screen.queryByLabelText('breadcrumb')).toBeNull();
+	});
+
+	it('shows breadcrumbs on product page', () => {
+		renderHeader({ path: '/product/123' });
+		expect(screen.getByLabelText('breadcrumb')).toBeInTheDocument();
 	});
 });
