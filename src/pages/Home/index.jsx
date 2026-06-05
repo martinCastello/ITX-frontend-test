@@ -1,39 +1,50 @@
-import preactLogo from '../../assets/preact.svg';
+import { useState, useEffect } from 'preact/hooks';
+import { ProductCard } from '../../components/ProductCard/ProductCard';
+import { fetchProducts } from '../../services/api';
 import './style.css';
 
 export function Home() {
-	return (
-		<div class="home">
-			<a href="https://preactjs.com" target="_blank">
-				<img src={preactLogo} alt="Preact logo" height="160" width="160" />
-			</a>
-			<h1>Get Started building Vite-powered Preact Apps </h1>
-			<section>
-				<Resource
-					title="Learn Preact"
-					description="If you're new to Preact, try the interactive tutorial to learn important concepts"
-					href="https://preactjs.com/tutorial"
-				/>
-				<Resource
-					title="Differences to React"
-					description="If you're coming from React, you may want to check out our docs to see where Preact differs"
-					href="https://preactjs.com/guide/v10/differences-to-react"
-				/>
-				<Resource
-					title="Learn Vite"
-					description="To learn more about Vite and how you can customize it to fit your needs, take a look at their excellent documentation"
-					href="https://vitejs.dev"
-				/>
-			</section>
-		</div>
-	);
-}
+	const [products, setProducts] = useState([]);
+	const [search, setSearch] = useState('');
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 
-function Resource(props) {
+	useEffect(() => {
+		fetchProducts()
+			.then(setProducts)
+			.catch(err => setError(err.message))
+			.finally(() => setLoading(false));
+	}, []);
+
+	const filtered = products.filter(p => {
+		const q = search.toLowerCase();
+		return p.brand.toLowerCase().includes(q) || p.model.toLowerCase().includes(q);
+	});
+
+	if (loading) return <p class="plp__status">Cargando productos...</p>;
+	if (error) return <p class="plp__status plp__status--error">{error}</p>;
+
 	return (
-		<a href={props.href} target="_blank" class="resource">
-			<h2>{props.title}</h2>
-			<p>{props.description}</p>
-		</a>
+		<div class="plp">
+			<div class="plp__toolbar">
+				<h1 class="plp__title">Productos</h1>
+				<input
+					class="plp__search"
+					type="search"
+					placeholder="Buscar por marca o modelo..."
+					value={search}
+					onInput={e => setSearch(e.target.value)}
+					aria-label="Buscar productos"
+				/>
+			</div>
+			<div class="plp__grid">
+				{filtered.map(product => (
+					<ProductCard key={product.id} product={product} />
+				))}
+			</div>
+			{filtered.length === 0 && (
+				<p class="plp__status">No se encontraron productos.</p>
+			)}
+		</div>
 	);
 }
