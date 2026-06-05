@@ -66,7 +66,7 @@ describe('Home (PLP)', () => {
 		));
 		render(<Home />);
 		await waitFor(() => {
-			expect(screen.getByText(/failed to fetch/i)).toBeInTheDocument();
+			expect(screen.getByText(/error al cargar/i)).toBeInTheDocument();
 		});
 	});
 });

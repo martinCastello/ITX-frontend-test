@@ -15,7 +15,7 @@ function renderWithLocation(ui, { path = '/', cartCount = 0 } = {}) {
 describe('Header', () => {
 	it('renders the app logo linking to home', () => {
 		renderWithLocation(<Header />);
-		const logo = screen.getByText('Mobile Shop');
+		const logo = screen.getByText('Tienda Móvil');
 		expect(logo).toBeInTheDocument();
 		expect(logo.getAttribute('href')).toBe('/');
 	});
@@ -30,17 +30,17 @@ describe('Header', () => {
 		expect(screen.queryByText('0')).toBeNull();
 	});
 
-	it('shows only Home in breadcrumbs on root path', () => {
+	it('shows only Inicio in breadcrumbs on root path', () => {
 		renderWithLocation(<Header />, { path: '/' });
 		const breadcrumb = screen.getByLabelText('breadcrumb');
-		expect(breadcrumb).toHaveTextContent('Home');
+		expect(breadcrumb).toHaveTextContent('Inicio');
 		expect(breadcrumb.querySelector('a')).toBeNull();
 	});
 
-	it('shows Home link and Product in breadcrumbs on product page', () => {
+	it('shows Inicio link and Producto in breadcrumbs on product page', () => {
 		renderWithLocation(<Header />, { path: '/product/123' });
 		const breadcrumb = screen.getByLabelText('breadcrumb');
 		expect(breadcrumb.querySelector('a')).toHaveAttribute('href', '/');
-		expect(breadcrumb).toHaveTextContent('Product');
+		expect(breadcrumb).toHaveTextContent('Producto');
 	});
 });

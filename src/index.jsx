@@ -1,6 +1,7 @@
 import { render } from 'preact';
 import { LocationProvider, Router, Route } from 'preact-iso';
 
+import './i18n/index.js';
 import { CartProvider } from './context/CartContext.jsx';
 import { Header } from './components/Header.jsx';
 import { Home } from './pages/Home/index.jsx';

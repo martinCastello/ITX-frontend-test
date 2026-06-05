@@ -41,6 +41,28 @@
 	color: #888;
 }
 
+.header__actions {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.header__lang {
+	background: transparent;
+	border: 1px solid #555;
+	color: #ccc;
+	border-radius: 4px;
+	padding: 4px 8px;
+	font-size: 0.8rem;
+	cursor: pointer;
+	transition: border-color 0.15s, color 0.15s;
+}
+
+.header__lang:hover {
+	border-color: #fff;
+	color: #fff;
+}
+
 .header__cart {
 	position: relative;
 	display: flex;

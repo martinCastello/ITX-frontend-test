@@ -1,0 +1,35 @@
+{
+	"header": {
+		"logo": "Tienda Móvil",
+		"breadcrumb": {
+			"home": "Inicio",
+			"product": "Producto"
+		},
+		"cart": {
+			"ariaLabel": "Carrito: {{count}} artículos"
+		}
+	},
+	"plp": {
+		"title": "Productos",
+		"search": "Buscar por marca o modelo...",
+		"loading": "Cargando productos...",
+		"empty": "No se encontraron productos.",
+		"error": "Error al cargar productos."
+	},
+	"pdp": {
+		"loading": "Cargando producto...",
+		"back": "← Volver al listado",
+		"specs": {
+			"os": "Sistema operativo",
+			"cpu": "Procesador",
+			"ram": "RAM",
+			"battery": "Batería"
+		},
+		"actions": {
+			"storage": "Almacenamiento",
+			"color": "Color",
+			"add": "Añadir",
+			"adding": "Añadiendo..."
+		}
+	}
+}

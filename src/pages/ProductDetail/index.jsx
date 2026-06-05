@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'preact/hooks';
+import { useTranslation } from '../../i18n/useTranslation';
 import { fetchProduct, addToCart } from '../../services/api';
 import { useCart } from '../../context/CartContext';
 import './style.css';
 
 export function ProductDetail({ id }) {
+	const { t } = useTranslation();
 	const [product, setProduct] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -33,7 +35,7 @@ export function ProductDetail({ id }) {
 		}
 	};
 
-	if (loading) return <p class="pdp__status">Cargando producto...</p>;
+	if (loading) return <p class="pdp__status">{t('pdp.loading')}</p>;
 	if (error) return <p class="pdp__status pdp__status--error">{error}</p>;
 
 	const { brand, model, price, imgUrl, os, cpu, ram, battery, options } = product;
@@ -45,22 +47,22 @@ export function ProductDetail({ id }) {
 			</div>
 
 			<div class="pdp__details-col">
-				<a href="/" class="pdp__back">← Volver al listado</a>
+				<a href="/" class="pdp__back">{t('pdp.back')}</a>
 
 				<h1 class="pdp__title">{brand} {model}</h1>
 				{price && <p class="pdp__price">{price} €</p>}
 
 				<div class="pdp__specs">
-					{os && <div class="pdp__spec"><span>Sistema operativo</span><span>{os}</span></div>}
-					{cpu && <div class="pdp__spec"><span>Procesador</span><span>{cpu}</span></div>}
-					{ram && <div class="pdp__spec"><span>RAM</span><span>{ram}</span></div>}
-					{battery && <div class="pdp__spec"><span>Batería</span><span>{battery}</span></div>}
+					{os && <div class="pdp__spec"><span>{t('pdp.specs.os')}</span><span>{os}</span></div>}
+					{cpu && <div class="pdp__spec"><span>{t('pdp.specs.cpu')}</span><span>{cpu}</span></div>}
+					{ram && <div class="pdp__spec"><span>{t('pdp.specs.ram')}</span><span>{ram}</span></div>}
+					{battery && <div class="pdp__spec"><span>{t('pdp.specs.battery')}</span><span>{battery}</span></div>}
 				</div>
 
 				<div class="pdp__actions">
 					{options?.storages?.length > 0 && (
 						<div class="pdp__selector">
-							<p class="pdp__selector-label">Almacenamiento</p>
+							<p class="pdp__selector-label">{t('pdp.actions.storage')}</p>
 							<div class="pdp__selector-options">
 								{options.storages.map(s => (
 									<button
@@ -77,7 +79,7 @@ export function ProductDetail({ id }) {
 
 					{options?.colors?.length > 0 && (
 						<div class="pdp__selector">
-							<p class="pdp__selector-label">Color</p>
+							<p class="pdp__selector-label">{t('pdp.actions.color')}</p>
 							<div class="pdp__selector-options">
 								{options.colors.map(c => (
 									<button
@@ -97,7 +99,7 @@ export function ProductDetail({ id }) {
 						onClick={handleAddToCart}
 						disabled={adding}
 					>
-						{adding ? 'Añadiendo...' : 'Añadir'}
+						{adding ? t('pdp.actions.adding') : t('pdp.actions.add')}
 					</button>
 				</div>
 			</div>

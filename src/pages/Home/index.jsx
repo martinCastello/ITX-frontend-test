@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'preact/hooks';
+import { useTranslation } from '../../i18n/useTranslation';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { fetchProducts } from '../../services/api';
 import './style.css';
 
 export function Home() {
+	const { t } = useTranslation();
 	const [products, setProducts] = useState([]);
 	const [search, setSearch] = useState('');
 	const [loading, setLoading] = useState(true);
@@ -21,20 +23,20 @@ export function Home() {
 		return p.brand.toLowerCase().includes(q) || p.model.toLowerCase().includes(q);
 	});
 
-	if (loading) return <p class="plp__status">Cargando productos...</p>;
-	if (error) return <p class="plp__status plp__status--error">{error}</p>;
+	if (loading) return <p class="plp__status">{t('plp.loading')}</p>;
+	if (error) return <p class="plp__status plp__status--error">{t('plp.error')}</p>;
 
 	return (
 		<div class="plp">
 			<div class="plp__toolbar">
-				<h1 class="plp__title">Productos</h1>
+				<h1 class="plp__title">{t('plp.title')}</h1>
 				<input
 					class="plp__search"
 					type="search"
-					placeholder="Buscar por marca o modelo..."
+					placeholder={t('plp.search')}
 					value={search}
 					onInput={e => setSearch(e.target.value)}
-					aria-label="Buscar productos"
+					aria-label={t('plp.search')}
 				/>
 			</div>
 			<div class="plp__grid">
@@ -43,7 +45,7 @@ export function Home() {
 				))}
 			</div>
 			{filtered.length === 0 && (
-				<p class="plp__status">No se encontraron productos.</p>
+				<p class="plp__status">{t('plp.empty')}</p>
 			)}
 		</div>
 	);

@@ -1,0 +1,35 @@
+{
+	"header": {
+		"logo": "Mobile Shop",
+		"breadcrumb": {
+			"home": "Home",
+			"product": "Product"
+		},
+		"cart": {
+			"ariaLabel": "Cart: {{count}} items"
+		}
+	},
+	"plp": {
+		"title": "Products",
+		"search": "Search by brand or model...",
+		"loading": "Loading products...",
+		"empty": "No products found.",
+		"error": "Error loading products."
+	},
+	"pdp": {
+		"loading": "Loading product...",
+		"back": "← Back to list",
+		"specs": {
+			"os": "Operating system",
+			"cpu": "Processor",
+			"ram": "RAM",
+			"battery": "Battery"
+		},
+		"actions": {
+			"storage": "Storage",
+			"color": "Color",
+			"add": "Add",
+			"adding": "Adding..."
+		}
+	}
+}
