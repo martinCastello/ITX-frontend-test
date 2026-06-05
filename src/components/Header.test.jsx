@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/preact';
 import { LocationProvider } from 'preact-iso';
+import { CartProvider } from '../context/CartContext';
 import { Header } from './Header';
 
-function renderWithLocation(ui, { path = '/' } = {}) {
+function renderWithLocation(ui, { path = '/', cartCount = 0 } = {}) {
 	window.history.pushState({}, '', path);
-	return render(<LocationProvider>{ui}</LocationProvider>);
+	return render(
+		<CartProvider initialCount={cartCount}>
+			<LocationProvider>{ui}</LocationProvider>
+		</CartProvider>
+	);
 }
 
 describe('Header', () => {
@@ -15,12 +20,12 @@ describe('Header', () => {
 		expect(logo.getAttribute('href')).toBe('/');
 	});
 
-	it('shows cart count badge when cartCount > 0', () => {
-		renderWithLocation(<Header cartCount={3} />);
+	it('shows cart count badge when count > 0', () => {
+		renderWithLocation(<Header />, { cartCount: 3 });
 		expect(screen.getByText('3')).toBeInTheDocument();
 	});
 
-	it('hides cart badge when cartCount is 0', () => {
+	it('hides cart badge when count is 0', () => {
 		renderWithLocation(<Header />);
 		expect(screen.queryByText('0')).toBeNull();
 	});
