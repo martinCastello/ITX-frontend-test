@@ -15,6 +15,7 @@ describe('Home (PLP)', () => {
 
 	afterEach(() => {
 		vi.unstubAllGlobals();
+		localStorage.clear();
 	});
 
 	it('shows loading state initially', () => {

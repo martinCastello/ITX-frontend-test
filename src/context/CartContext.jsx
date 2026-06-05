@@ -5,12 +5,12 @@ const CartContext = createContext(null);
 
 export function CartProvider({ children, initialCount = 0 }) {
 	const [count, setCount] = useState(() => {
-		const stored = sessionStorage.getItem('cartCount');
+		const stored = localStorage.getItem('cartCount');
 		return stored !== null ? parseInt(stored, 10) : initialCount;
 	});
 
 	const updateCount = (newCount) => {
-		sessionStorage.setItem('cartCount', String(newCount));
+		localStorage.setItem('cartCount', String(newCount));
 		setCount(newCount);
 	};
 
